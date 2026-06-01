@@ -1,502 +1,437 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Nusantara Journey - Travel Agency Indonesia</title>
-
+<title>Nusantara Journey - Booking Hotel & Penginapan Terbaik</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
 <style>
+    /* GLOBAL BLUE THEME CONFIGURATION */
+    :root {
+    --primary: #0264E6;        
+    --primary-light: #EFF6FF;  
+    --secondary: #0F172A;     
+    --gray-light: #F8FAFC;    
+    --gray-muted: #64748B;    
+    --accent: #FF9900;        
+    --white: #FFFFFF;
+    --radius: 16px;
+    --shadow-sm: 0 4px 12px rgba(2, 100, 230, 0.03);
+    --shadow-md: 0 12px 32px rgba(15, 23, 42, 0.06);
+    }
 
-:root{
---primary:#0F4C5C;
---secondary:#1A936F;
---accent:#F4A261;
---bg:#F8FAFC;
---text:#1E293B;
-}
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body { background: var(--white); color: var(--secondary); line-height: 1.6; overflow-x: hidden; }
+    .container { width: min(1200px, 92%); margin: auto; }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+    /* NAVBAR */
+    nav { background: var(--white); border-bottom: 1px solid #E2E8F0; position: sticky; top: 0; z-index: 1000; }
+    .nav-wrapper { height: 72px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-size: 1.4rem; font-weight: 800; color: var(--secondary); letter-spacing: -0.5px; text-decoration: none; }
+    .logo span { color: var(--primary); }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a { text-decoration: none; color: var(--secondary); font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+    .btn-nav { padding: 10px 20px; background: var(--primary); color: var(--white); text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 0.9rem; }
 
-html{
-scroll-behavior:smooth;
-}
+    /* HERO HEADER */
+    .hero-bg { background: linear-gradient(185deg, #024cb0 0%, #0264E6 100%); padding: 60px 0 140px 0; text-align: center; color: var(--white); }
+    .hero-bg h1 { font-size: 2.6rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; }
+    .hero-bg p { color: rgba(255, 255, 255, 0.85); font-size: 1.05rem; }
 
-body{
-font-family:'Inter',sans-serif;
-background:var(--bg);
-color:var(--text);
-line-height:1.6;
-}
+    /* SEARCH WIDGET */
+    .search-section { margin-top: -80px; margin-bottom: 40px; }
+    .search-box { background: var(--white); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-md); border: 1px solid #E2E8F0; }
+    .search-tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid #F1F5F9; padding-bottom: 12px; }
+    .tab-link { padding: 10px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; color: var(--gray-muted); text-decoration: none; }
+    .tab-link.active { background: var(--primary-light); color: var(--primary); }
+    
+    .search-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 16px; }
+    @media (max-width: 768px) {
+      .search-grid { grid-template-columns: 1fr; }
+    }
+    .input-field { display: flex; flex-direction: column; gap: 6px; border: 1px solid #CBD5E1; padding: 10px 14px; border-radius: 10px; background: var(--white); }
+    .input-field label { font-size: 0.75rem; font-weight: 700; color: var(--gray-muted); text-transform: uppercase; }
+    .input-field input { border: none; outline: none; font-size: 0.95rem; font-weight: 500; color: var(--secondary); background: transparent; width: 100%; }
+    .btn-search { background: var(--primary); color: var(--white); border: none; border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer; }
 
-/* NAVBAR */
+    /* SECTIONS & CARDS GENERAL */
+    .section-spacing { padding: 40px 0; }
+    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .section-header h2 { font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 800; color: var(--secondary); }
+    .view-all { color: var(--primary); text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+    
+    .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+    .item-card { background: var(--white); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid #F1F5F9; transition: transform 0.25s; }
+    .item-card:hover { transform: translateY(-4px); }
+    .card-thumb { height: 180px; position: relative; }
+    .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .badge-top { position: absolute; top: 12px; left: 12px; background: rgba(15, 23, 42, 0.75); color: var(--white); padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
+    .card-details { padding: 16px; }
+    .rating-wrapper { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; margin-bottom: 12px; }
+    .rating-score { background: var(--primary); color: var(--white); padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+    .price { font-size: 1.15rem; font-weight: 800; color: var(--accent); }
+    .price span { font-size: 0.75rem; color: var(--gray-muted); font-weight: 400; }
 
-.navbar{
-position:fixed;
-width:100%;
-top:0;
-padding:20px 8%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:rgba(255,255,255,.92);
-backdrop-filter:blur(10px);
-z-index:999;
-}
+    /* INSPIRATION MINI-SPA (PERFECT MOBILE & DESKTOP BALANCE) */
+    .inspire-tabs-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 4px 4px 16px 4px;
+    margin-bottom: 24px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; 
+    }
+    .inspire-tabs-scroll::-webkit-scrollbar { display: none; }
 
-.logo{
-font-size:1.5rem;
-font-weight:800;
-color:var(--primary);
-}
+    .inspire-radio { display: none; }
 
-.nav-links{
-display:flex;
-gap:30px;
-}
+    .inspire-label {
+    flex: 0 0 160px;
+    height: 90px;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-.nav-links a{
-text-decoration:none;
-color:var(--text);
-font-weight:500;
-transition:.3s;
-}
+    @media (min-width: 769px) {
+      .inspire-label { flex: 1; min-width: 150px; max-width: 220px; }
+    }
 
-.nav-links a:hover{
-color:var(--secondary);
-}
+    .inspire-label img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.65); transition: transform 0.3s ease; }
+    .inspire-label:hover img { transform: scale(1.05); }
+    .inspire-label .label-text { position: absolute; bottom: 10px; left: 12px; color: var(--white); font-weight: 700; font-size: 0.95rem; z-index: 2; }
+    .inspire-label .badge-dist { position: absolute; top: 8px; left: 10px; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); color: var(--white); font-size: 0.65rem; font-weight: 600; padding: 2px 6px; border-radius: 4px; z-index: 2; }
 
-.hamburger{
-display:none;
-font-size:2rem;
-cursor:pointer;
-color:var(--primary);
-user-select:none;
-}
+    .inspire-radio:checked + .inspire-label { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 8px 16px rgba(2, 100, 230, 0.15); }
+    .inspire-radio:checked + .inspire-label img { filter: brightness(0.5); }
 
-/* HERO */
+    .inspire-content-group { display: none; }
 
-.hero{
-height:100vh;
-background:url('https://images.unsplash.com/photo-1537996194471-e657df975ab4') center/cover;
-display:flex;
-align-items:center;
-padding:0 8%;
-position:relative;
-}
+    #dest-all:checked ~ .inspire-content-wrapper #list-all,
+    #dest-penang:checked ~ .inspire-content-wrapper #list-penang,
+    #dest-hk:checked ~ .inspire-content-wrapper #list-hk,
+    #dest-osaka:checked ~ .inspire-content-wrapper #list-osaka,
+    #dest-bali:checked ~ .inspire-content-wrapper #list-bali {
+    display: block;
+    }
 
-.hero::before{
-content:"";
-position:absolute;
-inset:0;
-background:rgba(0,0,0,.45);
-}
+    /* CARD PLACES RESPONSIVE GRID */
+    .grid-places { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    @media (min-width: 768px) {
+      .grid-places { grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    }
 
-.hero-content{
-position:relative;
-max-width:700px;
-color:white;
-}
+    .place-card { background: var(--white); border-radius: 16px; overflow: hidden; border: 1px solid #F1F5F9; box-shadow: var(--shadow-sm); position: relative; display: flex; flex-direction: column; }
+    .place-thumb { width: 100%; height: 130px; position: relative; }
+    @media (min-width: 768px) { .place-thumb { height: 180px; } }
+    .place-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .btn-heart {
+    background: rgba(255, 255, 255, 0.9); border: none; width: 32px; height: 32px; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; position: absolute; top: 12px; right: 12px; z-index: 3; transition: transform 0.2s;
+    }
+    .btn-heart:hover { transform: scale(1.1); }
 
-.hero h1{
-font-size:4rem;
-font-weight:800;
-margin-bottom:20px;
-line-height:1.1;
-}
+    .badge-fire { background: #FFEFEF; color: #FF4D4F; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
+    .card-meta-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.85rem; color: var(--gray-muted); }
 
-.hero p{
-font-size:1.2rem;
-font-weight:400;
-margin-bottom:30px;
-}
-
-.btn{
-padding:15px 30px;
-border:none;
-border-radius:12px;
-cursor:pointer;
-font-family:'Inter',sans-serif;
-font-size:1.2rem;
-font-weight:400;
-transition:.3s;
-}
-
-.btn:hover{
-transform:translateY(-2px);
-}
-
-.btn-primary{
-background:var(--accent);
-color:Black;
-}
-
-.btn-secondary{
-background:white;
-color:var(--text);
-margin-left:10px;
-}
-
-/* SECTION */
-
-.section{
-padding:100px 8%;
-}
-
-.section-title{
-font-size:2.5rem;
-margin-bottom:50px;
-text-align:center;
-color:var(--primary);
-}
-
-/* DESTINATIONS */
-
-.destinations{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-}
-
-.card{
-background:white;
-border-radius:20px;
-overflow:hidden;
-transition:.3s;
-box-shadow:0 10px 25px rgba(0,0,0,.05);
-}
-
-.card:hover{
-transform:translateY(-10px);
-}
-
-.card img{
-width:100%;
-height:220px;
-object-fit:cover;
-}
-
-.card-content{
-padding:20px;
-}
-
-/* FEATURES */
-
-.features{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:30px;
-}
-
-.feature{
-background:white;
-padding:35px;
-border-radius:20px;
-text-align:center;
-box-shadow:0 10px 25px rgba(0,0,0,.05);
-}
-
-/* STEPS */
-
-.steps{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-}
-
-.step{
-background:white;
-padding:30px;
-border-radius:20px;
-box-shadow:0 10px 25px rgba(0,0,0,.05);
-}
-
-.step h3{
-color:var(--secondary);
-font-size:2rem;
-}
-
-/* CTA */
-
-.cta{
-background:linear-gradient(
-135deg,
-var(--primary),
-var(--secondary)
-);
-color:white;
-text-align:center;
-padding:100px 8%;
-}
-
-.cta h2{
-font-size:2.5rem;
-margin-bottom:30px;
-}
-
-.btn-cta{
-font-size:1.2rem;
-font-weight:400;
-}
-
-/* FOOTER */
-
-footer{
-background:#0b1720;
-color:white;
-padding:50px 8%;
-text-align:center;
-}
-
-/* MOBILE */
-
-@media(max-width:768px){
-
-.hero{
-text-align:center;
-justify-content:center;
-}
-
-.hero h1{
-font-size:2.6rem;
-}
-
-.hero p{
-font-size:1.1rem;
-}
-
-.btn{
-width:100%;
-margin-bottom:12px;
-}
-
-.btn-secondary{
-margin-left:0;
-}
-
-.hamburger{
-display:block;
-}
-
-.nav-links{
-position:absolute;
-top:80px;
-right:8%;
-background:white;
-padding:20px;
-border-radius:15px;
-display:none;
-flex-direction:column;
-gap:15px;
-box-shadow:0 15px 35px rgba(0,0,0,.15);
-}
-
-.nav-links.active{
-display:flex;
-}
-
-.section-title{
-font-size:2rem;
-}
-
-.cta h2{
-font-size:2rem;
-}
-
-.btn-cta{
-font-size:1.5rem;
-}
-
-}
-
+    /* FOOTER */
+    footer { background: #111827; color: #9CA3AF; padding: 60px 0 30px 0; margin-top: 80px; }
+    .footer-columns { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); gap: 40px; padding-bottom: 40px; border-bottom: 1px solid #1F2937; }
+    @media (max-width: 768px) { .footer-columns { grid-template-columns: 1fr; gap: 24px; } }
+    .footer-col h4 { color: var(--white); margin-bottom: 16px; font-size: 0.95rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul li a { color: #9CA3AF; text-decoration: none; font-size: 0.85rem; }
+    .footer-bottom { padding-top: 30px; text-align: center; font-size: 0.8rem; }
 </style>
 </head>
 <body>
 
-<nav class="navbar">
-
-<div class="logo">
-Nusantara Journey
-</div>
-
-<div class="hamburger" id="hamburger">
-☰
-</div>
-
-<div class="nav-links" id="navLinks">
-<a href="#destinations">Destinations</a>
-<a href="#experiences">Experiences</a>
-<a href="#about">About</a>
-<a href="#contact">Contact</a>
-</div>
-
+<nav>
+    <div class="container nav-wrapper">
+    <a href="index.html" class="logo">Nusantara<span>Journey</span></a>
+    <div class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="pesawat.html">Tiket Pesawat</a>
+        <a href="kereta.html">Kereta Api</a>
+        <a href="kontak.html">Hubungi Kami</a>
+    </div>
+    <a href="#" class="btn-nav">Masuk Akun</a>
+    </div>
 </nav>
 
-<section class="hero">
+<header class="hero-bg">
+    <div class="container">
+    <h1>Satu Aplikasi, Ragam Destinasi Nusantara</h1>
+    <p>Temukan ekosistem perjalanan terlengkap untuk tempat menginap mewah di seluruh penjuru Indonesia.</p>
+    </div>
+</header>
 
-<div class="hero-content">
-
-<h1>
-Discover Indonesia Beyond The Ordinary
-</h1>
-
-<p>
-Personalized journeys crafted by local experts.
-Explore Bali, Java, Raja Ampat, Komodo, Lombok,
-and hidden gems across Indonesia.
-</p>
-
-<button class="btn btn-primary">
-Plan My Trip
-</button>
-
-<button class="btn btn-secondary">
-Explore Destinations
-</button>
-
-</div>
-
+<section class="container search-section">
+    <div class="search-box">
+    <div class="search-tabs">
+        <a href="index.html" class="tab-link active">🏨 Home</a>
+        <a href="pesawat.html" class="tab-link">✈️ Tiket Pesawat</a>
+        <a href="kereta.html" class="tab-link">🚆 Kereta Api</a>
+        <a href="kontak.html" class="tab-link">📞 Layanan CS</a>
+    </div>
+    <form class="search-grid">
+        <div class="input-field">
+        <label>Tujuan Akomodasi</label>
+        <input type="text" placeholder="Kota, wilayah, atau properti..." value="Yogyakarta">
+        </div>
+        <div class="input-field">
+        <label>Check-in</label>
+        <input type="date">
+        </div>
+        <div class="input-field">
+        <label>Check-out</label>
+        <input type="date">
+        </div>
+        <button type="button" class="btn-search">Cari Hotel</button>
+    </form>
+    </div>
 </section>
 
-<section id="destinations" class="section">
+<main class="container">
 
-<h2 class="section-title">
-Popular Destinations
-</h2>
+    <div class="section-header">
+      <h2>Get inspired for your next trip</h2>
+    </div>
 
-<div class="destinations">
+    <input type="radio" name="inspire-trigger" id="dest-all" class="inspire-radio" checked>
+    <input type="radio" name="inspire-trigger" id="dest-penang" class="inspire-radio">
+    <input type="radio" name="inspire-trigger" id="dest-hk" class="inspire-radio">
+    <input type="radio" name="inspire-trigger" id="dest-osaka" class="inspire-radio">
+    <input type="radio" name="inspire-trigger" id="dest-bali" class="inspire-radio">
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1537953773345-d172ccf13cf1">
-<div class="card-content">
-<h3>Bali</h3>
-<p>Culture, beaches and luxury escapes.</p>
-</div>
-</div>
+    <div class="inspire-tabs-scroll">
+      <label for="dest-all" class="inspire-label">
+        <img src="https://images.unsplash.com/photo-1534996858221-380b92700493?q=80&w=600&auto=format&fit=crop">
+        <span class="label-text">Anywhere</span>
+      </label>
+      
+      <label for="dest-penang" class="inspire-label">
+        <span class="badge-dist">Short haul</span>
+        <img src="https://images.unsplash.com/photo-1604999333679-b86d54738315?auto=format&fit=crop&w=300&q=80">
+        <span class="label-text">Penang</span>
+      </label>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86">
-<div class="card-content">
-<h3>Komodo</h3>
-<p>World-famous islands and marine life.</p>
-</div>
-</div>
+      <label for="dest-hk" class="inspire-label">
+        <span class="badge-dist">Medium haul</span>
+        <img src="https://images.unsplash.com/photo-1678110721308-a08ed05a7938?q=80&w=400&auto=format&fit=crop">
+        <span class="label-text">Hong Kong</span>
+      </label>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb">
-<div class="card-content">
-<h3>Raja Ampat</h3>
-<p>One of the world's best diving paradises.</p>
-</div>
-</div>
+      <label for="dest-osaka" class="inspire-label">
+        <span class="badge-dist">Long haul</span>
+        <img src="https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=300&q=80">
+        <span class="label-text">Osaka</span>
+      </label>
 
-</div>
+      <label for="dest-bali" class="inspire-label">
+        <span class="badge-dist">Short haul</span>
+        <img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+        <span class="label-text">Kyoto</span>
+      </label>
+      
+      <label for="dest-bali" class="inspire-label">
+        <span class="badge-dist">Short haul</span>
+        <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=300&q=80">
+        <span class="label-text">Bali</span>
+      </label>
+    </div>
 
-</section>
+    <div class="inspire-content-wrapper">
+      
+      <div id="list-all" class="inspire-content-group">
+        <div class="section-header">
+          <h3 style="font-size: 1.1rem; color: var(--gray-muted);">Places you may like</h3>
+          <a href="#" class="view-all">More →</a>
+        </div>
+        <div class="grid-places">
+          <div class="place-card">
+            <div class="place-thumb">
+              <span class="badge-top">Historical</span>
+              <button class="btn-heart">🤍</button>
+              <img src="https://images.unsplash.com/photo-1491156855053-9cdff72c7f85?q=80&w=400&auto=format&fit=crop">
+            </div>
+            <div class="place-info" style="padding: 12px 16px;">
+              <div class="card-meta-info"><span>London</span> <span class="badge-fire">🔥 10</span></div>
+              <h3>The British Museum</h3>
+              <div class="rating-wrapper"><span class="rating-score">4.8</span> <span style="color:var(--gray-muted);">3,391 reviews</span></div>
+            </div>
+          </div>
+          <div class="place-card">
+            <div class="place-thumb">
+              <span class="badge-top">Most Visited</span>
+              <button class="btn-heart">🤍</button>
+              <img src="https://images.unsplash.com/photo-1587648415693-4a5362b2ce41?q=80&w=400&auto=format&fit=crop">
+            </div>
+            <div class="place-info" style="padding: 12px 16px;">
+              <div class="card-meta-info"><span>Paris</span> <span class="badge-fire">🔥 10</span></div>
+              <h3>Louvre Museum</h3>
+              <div class="rating-wrapper"><span class="rating-score">4.7</span> <span style="color:var(--gray-muted);">9,672 reviews</span></div>
+            </div>
+          </div>
+          <div class="place-card">
+            <div class="place-thumb">
+              <span class="badge-top">Most Favorite</span>
+              <button class="btn-heart">🤍</button>
+              <img src="https://asset.japan.travel/image/upload/v1645708829/chiba/H_00336_001.jpg">
+            </div>
+            <div class="place-info" style="padding: 12px 16px;">
+              <div class="card-meta-info"><span>Tokyo</span> <span class="badge-fire">🔥 10</span></div>
+              <h3>Disneyland Tokyo</h3>
+              <div class="rating-wrapper"><span class="rating-score">4.7</span> <span style="color:var(--gray-muted);">9,672 reviews</span></div>
+            </div>
+          </div>
+          <div class="place-card">
+            <div class="place-thumb">
+              <span class="badge-top">Eye Catching</span>
+              <button class="btn-heart">🤍</button>
+              <img src="https://media.cntraveler.com/photos/540ddf5b81424d9d655be243/16:9/w_2560%2Cc_limit/london-eye-england.jpg">
+            </div>
+            <div class="place-info" style="padding: 12px 16px;">
+              <div class="card-meta-info"><span>London</span> <span class="badge-fire">🔥 10</span></div>
+              <h3>London Eye</h3>
+              <div class="rating-wrapper"><span class="rating-score">4.6</span> <span style="color:var(--gray-muted);">1,240 reviews</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<section id="experiences" class="section">
+      <div id="list-penang" class="inspire-content-group">
+        <div class="section-header">
+          <h3 style="font-size: 1.1rem; color: var(--gray-muted);">Top Attractions in Penang</h3>
+          <a href="#" class="view-all">More →</a>
+        </div>
+        <div class="grid-places">
+          <div class="place-card">
+            <div class="place-thumb">
+              <span class="badge-top">Trip.Best</span>
+              <button class="btn-heart">🤍</button>
+              <img src="https://images.unsplash.com/photo-1596436889106-be35e843f974?auto=format&fit=crop&w=400&q=80">
+            </div>
+            <div class="place-info">
+              <div class="card-meta-info"><span>Penang</span> <span class="badge-fire">🔥 9.8</span></div>
+              <h3>Kek Lok Si Temple</h3>
+              <div class="rating-wrapper"><span class="rating-score">4.6</span> <span style="color:var(--gray-muted);">1,240 reviews</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<h2 class="section-title">
-Why Travel With Us
-</h2>
+      <div id="list-hk" class="inspire-content-group">
+        <div class="section-header">
+          <h3 style="font-size: 1.1rem; color: var(--gray-muted);">Top Attractions in Hong Kong</h3>
+          <a href="#" class="view-all">More →</a>
+        </div>
+        <div class="grid-places">
+          <div class="place-card">
+            <div class="place-thumb">
+              <span class="badge-top">Trip.Best</span>
+              <button class="btn-heart">🤍</button>
+              <img src="https://images.unsplash.com/photo-1507984211203-76701d7bb120?auto=format&fit=crop&w=400&q=80">
+            </div>
+            <div class="place-info">
+              <div class="card-meta-info"><span>Hong Kong</span> <span class="badge-fire">🔥 9.9</span></div>
+              <h3>Disneyland Hong Kong</h3>
+              <div class="rating-wrapper"><span class="rating-score">4.8</span> <span style="color:var(--gray-muted);">14,205 reviews</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<div class="features">
+      <div id="list-osaka" class="inspire-content-group">
+        <div class="section-header">
+          <h3 style="font-size: 1.1rem; color: var(--gray-muted);">Top Attractions in Osaka</h3>
+          <a href="#" class="view-all">More →</a>
+        </div>
+        <div class="grid-places">
+          <div class="place-card">
+            <div class="place-thumb">
+              <span class="badge-top">Trip.Best</span>
+              <button class="btn-heart">🤍</button>
+              <img src="https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=400&q=80">
+            </div>
+            <div class="place-info">
+              <div class="card-meta-info"><span>Osaka</span> <span class="badge-fire">🔥 10</span></div>
+              <h3>Universal Studios Japan</h3>
+              <div class="rating-wrapper"><span class="rating-score">4.7</span> <span style="color:var(--gray-muted);">37,619 reviews</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<div class="feature">
-<h3>Local Expertise</h3>
-<p>We know Indonesia deeply.</p>
-</div>
+      <div id="list-bali" class="inspire-content-group">
+        <div class="section-header">
+          <h3 style="font-size: 1.1rem; color: var(--gray-muted);">Top Attractions in Bali</h3>
+          <a href="#" class="view-all">More →</a>
+        </div>
+        <div class="grid-places">
+          <div class="place-card">
+            <div class="place-thumb">
+              <span class="badge-top">Trip.Best</span>
+              <button class="btn-heart">🤍</button>
+              <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&q=80">
+            </div>
+            <div class="place-info">
+              <div class="card-meta-info"><span>Gianyar</span> <span class="badge-fire">🔥 9.7</span></div>
+              <h3>Sacred Monkey Forest Sanctuary</h3>
+              <div class="rating-wrapper"><span class="rating-score">4.6</span> <span style="color:var(--gray-muted);">8,110 reviews</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<div class="feature">
-<h3>Custom Itinerary</h3>
-<p>Trips tailored to your style.</p>
-</div>
+    </div>
 
-<div class="feature">
-<h3>Seamless Journey</h3>
-<p>Everything arranged from start to finish.</p>
-</div>
-
-</div>
-
-</section>
-
-<section id="about" class="section">
-
-<h2 class="section-title">
-How It Works
-</h2>
-
-<div class="steps">
-
-<div class="step">
-<h3>01</h3>
-<p>Tell us your dream trip.</p>
-</div>
-
-<div class="step">
-<h3>02</h3>
-<p>Receive a custom itinerary.</p>
-</div>
-
-<div class="step">
-<h3>03</h3>
-<p>Refine together.</p>
-</div>
-
-<div class="step">
-<h3>04</h3>
-<p>Travel stress-free.</p>
-</div>
-
-</div>
-
-</section>
-
-<section id="contact" class="cta">
-
-<h2>
-Let's Design Your Perfect Indonesian Journey
-</h2>
-
-<button class="btn btn-primary btn-cta">
-Free Consultation
-</button>
-
-</section>
+    <div class="section-header" style="margin-top: 50px;">
+      <h2>Rekomendasi Staycation Populer</h2>
+      <a href="#" class="view-all">Lihat Semua Properti →</a>
+    </div>
+    <div class="grid-cards">
+      <div class="item-card">
+          <div class="card-thumb">
+          <span class="badge-top">Malioboro, Yogyakarta</span>
+          <img src="https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/original/hotel-extranet/2024/07/28/85ecb525-393d-45dd-8149-174180bb316c-1722153379079-b888708b6625e1b80ec8d8c062dd894c.jpg">
+          </div>
+          <div class="card-details">
+          <h3>Jambuluwak Hotel</h3>
+          <div class="rating-wrapper"><span class="rating-score">4.9</span> <span>Luar Biasa</span></div>
+          <div class="price">Rp1.250.000<span>/malam</span></div>
+          </div>
+      </div>
+    </div>
+</main>
 
 <footer>
-
-<h3>Nusantara Journey</h3>
-
-<p>
-Custom Indonesia Travel Experiences
-</p>
-
+    <div class="container footer-columns">
+    <div class="footer-col">
+        <h4>Nusantara Journey</h4>
+        <p style="font-size: 0.85rem; line-height: 1.6;">Solusi terintegrasi perjalanan liburan, akomodasi hotel, dan logistik transportasi terbaik di Indonesia.</p>
+    </div>
+    <div class="footer-col">
+        <h4>Produk</h4>
+        <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="pesawat.html">Tiket Pesawat</a></li>
+        <li><a href="kereta.html">Kereta Api</a></li>
+        </ul>
+    </div>
+    </div>
+    <div class="footer-bottom">
+    <p>&copy; 2026 Nusantara Journey. Seluruh Hak Cipta Dilindungi.</p>
+    </div>
 </footer>
-
-<script>
-
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('navLinks');
-
-hamburger.addEventListener('click', () => {
-navLinks.classList.toggle('active');
-});
-
-document.querySelectorAll('.nav-links a').forEach(link=>{
-link.addEventListener('click',()=>{
-navLinks.classList.remove('active');
-});
-});
-
-</script>
 
 </body>
 </html>

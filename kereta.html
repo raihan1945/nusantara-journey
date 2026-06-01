@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nusantara Journey - Booking Hotel & Penginapan Terbaik</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* GLOBAL BLUE THEME CONFIGURATION */
+    :root {
+      --primary: #0264E6;        
+      --primary-light: #EFF6FF;  
+      --secondary: #0F172A;     
+      --gray-light: #F8FAFC;    
+      --gray-muted: #64748B;    
+      --accent: #FF9900;        
+      --white: #FFFFFF;
+      --radius: 16px;
+      --shadow-sm: 0 4px 12px rgba(2, 100, 230, 0.03);
+      --shadow-md: 0 12px 32px rgba(15, 23, 42, 0.06);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body { background: var(--white); color: var(--secondary); line-height: 1.6; overflow-x: hidden; }
+    .container { width: min(1200px, 92%); margin: auto; }
+
+    /* NAVBAR */
+    nav { background: var(--white); border-bottom: 1px solid #E2E8F0; position: sticky; top: 0; z-index: 1000; }
+    .nav-wrapper { height: 72px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-size: 1.4rem; font-weight: 800; color: var(--secondary); letter-spacing: -0.5px; text-decoration: none; }
+    .logo span { color: var(--primary); }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a { text-decoration: none; color: var(--secondary); font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+    .btn-nav { padding: 10px 20px; background: var(--primary); color: var(--white); text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 0.9rem; }
+
+    /* HERO HEADER */
+    .hero-bg { background: linear-gradient(185deg, #024cb0 0%, #0264E6 100%); padding: 60px 0 140px 0; text-align: center; color: var(--white); }
+    .hero-bg h1 { font-size: 2.6rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; }
+    .hero-bg p { color: rgba(255, 255, 255, 0.85); font-size: 1.05rem; }
+
+    /* SEARCH WIDGET */
+    .search-section { margin-top: -80px; margin-bottom: 40px; }
+    .search-box { background: var(--white); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-md); border: 1px solid #E2E8F0; }
+    .search-tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid #F1F5F9; padding-bottom: 12px; }
+    .tab-link { padding: 10px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; color: var(--gray-muted); text-decoration: none; }
+    .tab-link.active { background: var(--primary-light); color: var(--primary); }
+    
+    .search-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 16px; }
+    .input-field { display: flex; flex-direction: column; gap: 6px; border: 1px solid #CBD5E1; padding: 10px 14px; border-radius: 10px; background: var(--white); }
+    .input-field label { font-size: 0.75rem; font-weight: 700; color: var(--gray-muted); text-transform: uppercase; }
+    .input-field input { border: none; outline: none; font-size: 0.95rem; font-weight: 500; color: var(--secondary); background: transparent; width: 100%; }
+    .btn-search { background: var(--primary); color: var(--white); border: none; border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer; }
+
+    /* SECTIONS & CARDS */
+    .section-spacing { padding: 40px 0; }
+    .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; }
+    .section-header h2 { font-size: 1.6rem; font-weight: 800; }
+    .view-all { color: var(--primary); text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+    
+    .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+    .item-card { background: var(--white); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid #F1F5F9; transition: transform 0.25s; }
+    .item-card:hover { transform: translateY(-4px); }
+    .card-thumb { height: 180px; position: relative; }
+    .card-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .badge-top { position: absolute; top: 12px; left: 12px; background: rgba(15, 23, 42, 0.75); color: var(--white); padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
+    .card-details { padding: 16px; }
+    .rating-wrapper { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; margin-bottom: 12px; }
+    .rating-score { background: var(--primary); color: var(--white); padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+    .price { font-size: 1.15rem; font-weight: 800; color: var(--accent); }
+    .price span { font-size: 0.75rem; color: var(--gray-muted); font-weight: 400; }
+
+    /* FOOTER */
+    footer { background: #111827; color: #9CA3AF; padding: 60px 0 30px 0; margin-top: 80px; }
+    .footer-columns { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); gap: 40px; padding-bottom: 40px; border-bottom: 1px solid #1F2937; }
+    .footer-col h4 { color: var(--white); margin-bottom: 16px; font-size: 0.95rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul li a { color: #9CA3AF; text-decoration: none; font-size: 0.85rem; }
+    .footer-bottom { padding-top: 30px; text-align: center; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container nav-wrapper">
+      <a href="index.html" class="logo">Nusantara<span>Journey</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="pesawat.html">Tiket Pesawat</a>
+        <a href="kereta.html" class="active">Kereta Api</a>
+        <a href="kontak.html">Hubungi Kami</a>
+      </div>
+      <a href="#" class="btn-nav">Masuk Akun</a>
+    </div>
+  </nav>
+
+  <header class="hero-bg">
+    <div class="container">
+      <h1>Perjalanan Kereta Nyaman Sepanjang Jalur KAI</h1>
+      <p>Reservasi tiket kereta kelas eksekutif dan ekonomi premium dengan instan.</p>
+    </div>
+  </header>
+
+  <section class="container search-section">
+    <div class="search-box">
+      <div class="search-tabs">
+        <a href="index.html" class="tab-link">🏨 Home</a>
+        <a href="pesawat.html" class="tab-link">✈️ Tiket Pesawat</a>
+        <a href="kereta.html" class="tab-link active">🚆 Kereta Api</a>
+        <a href="kontak.html" class="tab-link">📞 Layanan CS</a>
+      </div>
+      <form class="search-grid">
+        <div class="input-field">
+          <label>Stasiun Asal</label>
+          <input type="text" placeholder="Stasiun keberangkatan..." value="Gambir (GMR)">
+        </div>
+        <div class="input-field">
+          <label>Stasiun Tujuan</label>
+          <input type="text" placeholder="Stasiun kedatangan..." value="Tugu Yogyakarta (YK)">
+        </div>
+        <div class="input-field">
+          <label>Tanggal Berangkat</label>
+          <input type="date">
+        </div>
+        <button type="button" class="btn-search">Cari Kereta</button>
+      </form>
+    </div>
+  </section>
+
+  <main class="container section-spacing">
+    <div class="section-header">
+      <h2>Tiket Kereta Eksekutif Terlaris</h2>
+      <a href="#" class="view-all">Cek Jadwal KAI →</a>
+    </div>
+    <div class="grid-cards">
+      <div class="item-card">
+        <div class="card-thumb">
+          <span class="badge-top">Taksaka Eksekutif</span>
+          <img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=400&q=80">
+        </div>
+        <div class="card-details">
+          <h3>Gambir (GMR) ke Yogyakarta (YK)</h3>
+          <p style="font-size: 0.85rem; color: #64748B; margin-bottom: 8px;">Waktu Tempuh: 6j 20m</p>
+          <div class="price">Rp550.000<span>/kursi</span></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Gunakan Footer Yang Sama dengan index.html -->
+</body>
+</html>
